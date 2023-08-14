@@ -46,21 +46,21 @@ public:
 		}
 		std::cout << root->value << " " << std::endl;
 	}
-	void recursion_insert(Node<T>* root, Node<T>* item) {
-		if (!root->left) {
-			root->left = item;
-			return;
+	void line_by_line(Node<T>* root) {
+		if (root == m_root) {
+			std::cout << root->value << " " << std::endl;
 		}
-		else if(!root->right){
-			root->right = item;
-			return;
+		if (root->left) {
+			std::cout << root->left->value << " " << std::endl;
 		}
-		else if (root->left) {
-			recursion_insert(root->left, item);
+		if (root->right) {
+			std::cout << root->right->value << " " << std::endl;
 		}
 		else {
-			recursion_insert(root->right, item);
+			return;
 		}
+		line_by_line(root->left);
+		line_by_line(root->right);
 	}
 
 	void insert(Node<T>* item) {
@@ -71,7 +71,23 @@ public:
 			recursion_insert(m_root, item);
 		}
 	}
-
+private:
+	void recursion_insert(Node<T>* root, Node<T>* item) {
+		if (!root->left) {
+			root->left = item;
+			return;
+		}
+		else if (!root->right) {
+			root->right = item;
+			return;
+		}
+		else if (root->left) {
+			recursion_insert(root->left, item);
+		}
+		else {
+			recursion_insert(root->right, item);
+		}
+	}
 };
 
 
@@ -131,6 +147,10 @@ int main() {
 	std::cout << std::endl;
 	std::cout << std::endl;
 
+	std::cout << "Line by line: " << std::endl;
+	bin_tree->line_by_line(bin_tree_root);
+	std::cout << std::endl;
+	std::cout << std::endl;
 
 	return 0;
 }
